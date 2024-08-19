@@ -7,7 +7,7 @@ import { ref, deleteObject } from "firebase/storage";
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr;
-  padding: 20px;
+  padding: 20px; 
   border: 1px solid rgba(225, 255, 255, 0.5);
   border-radius: 15px;
 `;
@@ -68,36 +68,9 @@ export default function Tweet({username, photo, tweet, userId, id}:ITweet){
         }
       } catch(e){
         console.log(e); 
-      } finally {
-        //
+      } finally {//
       }
     };
-    const onEdit = async () => {
-      if (user?.uid !== userId) return;
-      //let newWindow = null;
-      try{
-       // await updateDoc(doc(db, "tweets", id),{content : newContent});
-       //./src/compnents/edit-tweet.tsx
-       const newWindow = window.open("/edit-tweet", "editTweet", "width=800,height=300");
-       if(newWindow){
-        const checkWindowClosed = setInterval(() => {
-          if (newWindow.closed) {
-            clearInterval(checkWindowClosed);
-            console.log("Window closed, updating content...");
-            // 새 창이 닫힌 후 수행할 작업
-            //setContent("New Content after window closed"); // 예시로 상태를 업데이트
-            console.log("update is succeed");
-          }
-        }, 1000); // 1초 간격으로 창이 닫혔는지 확인
-       }
-        console.log("update is succeed");
-      } catch(e){
-        console.log(e);
-      } finally {
-        //
-      }
-    };
-
     return(
       <Wrapper>
         <Column>
@@ -107,10 +80,10 @@ export default function Tweet({username, photo, tweet, userId, id}:ITweet){
             <DeleteButton onClick={onDelete} >Delete</DeleteButton>
           ) : null}
           {user?.uid === userId ? (
-            <EditButton onClick={onEdit} >Edit</EditButton>
+            <EditButton >Edit</EditButton>
           ) : null}
           </Column>
         <Column> {photo ? <Photo src={photo} /> :null} </Column>
       </Wrapper>
-    );
-}
+    )
+  }

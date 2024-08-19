@@ -72,12 +72,12 @@ export default function PostTweetForm(){
             setFile(files[0]);
         }
     }
-    const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => { // 왜 onSubmit만 비동기로 만들어야 하는가?
+        e.preventDefault(); //onSubmit이 일어나면 비동기 처리 동안에 들어오는 Form칸의 입력 방지
         const user = auth.currentUser;
-        if (!user || isLoading || tweet === "" || tweet.length>180) return;
+        if (!user || isLoading || tweet === "" || tweet.length>180) return; //submit 거부 조건
         try {
-            setLoading(true);
+            setLoading(true); //submit 처리 중에는 isLoading 값이 true.
             const doc = await addDoc(collection(db,"tweets"), {
                 tweet,
                 createdAt: Date.now(),
@@ -92,8 +92,8 @@ export default function PostTweetForm(){
                     photo: url
                 })
             }
-            setTweet("");
-            setFile(null);
+            setTweet(""); //tweet 초기화
+            setFile(null); //file 초기화
         } catch(e){
             console.log(e);
         } finally {
